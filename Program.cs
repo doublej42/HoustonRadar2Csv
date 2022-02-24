@@ -9,7 +9,8 @@ using IHost host = Host
 //Get Filename from console
 var filename = Path.GetFullPath(args[0]);
 Console.WriteLine($"Reading {filename}");
-
+Console.WriteLine("What the Study ID?");
+var study = Console.ReadLine();
 using var inFile = File.OpenText(filename);
 var lineRegex = new Regex(@"^Time = (?<time>\d+), Type = \d+, (?<data>.*)$");
 var line = inFile.ReadLine();
@@ -40,6 +41,10 @@ while(line != null)
     }
     line = inFile.ReadLine();
 }
-await host.RunAsync();
+Console.WriteLine($"Writing {output.Data.Count} datapoints to {study}.csv");
+output.WriteFile($"{study}.csv");
+
+//host.Run();
+//await host.RunAsync();
 
 
